@@ -1,0 +1,79 @@
+/*
+ * Copyright 2026 Firefly Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+package io.fireflysoftware.core.insurance.financials.models.entities;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import io.fireflysoftware.core.insurance.financials.interfaces.enums.CommissionStatus;
+import io.fireflysoftware.core.insurance.financials.interfaces.enums.CommissionType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+/**
+ * Commission accrued for a party or distributor against a premium schedule.
+ * Maps to the 'commission_entry' table.
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table("commission_entry")
+public class CommissionEntry {
+
+    @Id
+    @Column("commission_entry_id")
+    private UUID commissionEntryId;
+
+    @Column("premium_schedule_id")
+    private UUID premiumScheduleId;
+
+    @Column("party_id")
+    private UUID partyId;
+
+    @Column("distributor_id")
+    private UUID distributorId;
+
+    @Column("commission_type")
+    private CommissionType commissionType;
+
+    @Column("amount")
+    private BigDecimal amount;
+
+    @Column("currency")
+    private String currency;
+
+    @Column("commission_status")
+    private CommissionStatus commissionStatus;
+
+    @Column("payment_order_id")
+    private UUID paymentOrderId;
+
+    @Column("created_at")
+    private LocalDateTime createdAt;
+
+    @Column("updated_at")
+    private LocalDateTime updatedAt;
+}
