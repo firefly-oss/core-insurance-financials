@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.firefly</groupId>
+        <artifactId>firefly-parent</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <artifactId>core-insurance-financials</artifactId>
+    <name>core-insurance-financials</name>
+    <description>Core repository for premium schedules, commissions, refunds, bordereaux, premium audits, and credit control. Developed by Firefly Software Foundation.</description>
+    <url>https://openplatform.fireflysoftware.io/core-insurance-financials</url>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>core-insurance-financials-core</module>
+        <module>core-insurance-financials-interfaces</module>
+        <module>core-insurance-financials-models</module>
+        <module>core-insurance-financials-sdk</module>
+        <module>core-insurance-financials-web</module>
+    </modules>
+
+    <properties>
+        <java.version>25</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.firefly</groupId>
+                <artifactId>core-insurance-financials-interfaces</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.firefly</groupId>
+                <artifactId>core-insurance-financials-models</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.firefly</groupId>
+                <artifactId>core-insurance-financials-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.firefly</groupId>
+                <artifactId>core-insurance-financials-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.firefly</groupId>
+                <artifactId>core-insurance-financials-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

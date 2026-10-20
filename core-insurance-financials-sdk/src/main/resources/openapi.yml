@@ -1,0 +1,2392 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:18080
+  description: Generated server url
+tags:
+- name: Premium Audits
+  description: "Premium audit adjustment from declared exposure. The rating figure\
+    \ is recorded, not calculated here."
+- name: Commission Entries
+  description: Commission accrued for a party or distributor against a premium schedule
+- name: Premium Refunds
+  description: Refund recorded against a premium schedule
+- name: Indemnity Disbursements
+  description: "Indemnity record pointing at a claim settlement and, once paid, a\
+    \ payment order"
+- name: Premium Instalments
+  description: One instalment on a premium schedule
+- name: Bordereau Lines
+  description: "One premium, commission, claim, or refund line on a bordereau"
+- name: Credit Control
+  description: Arrears follow-up and lapse notice against a premium schedule
+- name: Premium Schedules
+  description: Premium schedule for a policy
+- name: Bordereaux
+  description: Bordereau for a distributor and a period
+paths:
+  /api/v1/premium-schedules/{premiumScheduleId}:
+    get:
+      tags:
+      - Premium Schedules
+      summary: Get PremiumSchedule by id
+      description: Retrieve one PremiumSchedule
+      operationId: getPremiumScheduleById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: PremiumSchedule found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumScheduleDTO"
+        "404":
+          description: PremiumSchedule not found
+    put:
+      tags:
+      - Premium Schedules
+      summary: Update PremiumSchedule
+      description: Update an existing PremiumSchedule
+      operationId: updatePremiumSchedule
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumScheduleDTO"
+        required: true
+      responses:
+        "200":
+          description: PremiumSchedule updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumScheduleDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: PremiumSchedule not found
+    delete:
+      tags:
+      - Premium Schedules
+      summary: Delete PremiumSchedule
+      description: Delete a PremiumSchedule
+      operationId: deletePremiumSchedule
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: PremiumSchedule deleted
+        "404":
+          description: PremiumSchedule not found
+  /api/v1/premium-schedules/{premiumScheduleId}/refunds/{premiumRefundId}:
+    get:
+      tags:
+      - Premium Refunds
+      summary: Get PremiumRefund by id
+      description: Retrieve one PremiumRefund
+      operationId: getPremiumRefundById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumRefundId
+        in: path
+        description: Unique identifier of the PremiumRefund
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: PremiumRefund found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumRefundDTO"
+        "404":
+          description: PremiumRefund not found
+    put:
+      tags:
+      - Premium Refunds
+      summary: Update PremiumRefund
+      description: Update an existing PremiumRefund
+      operationId: updatePremiumRefund
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumRefundId
+        in: path
+        description: Unique identifier of the PremiumRefund
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumRefundDTO"
+        required: true
+      responses:
+        "200":
+          description: PremiumRefund updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumRefundDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: PremiumRefund not found
+    delete:
+      tags:
+      - Premium Refunds
+      summary: Delete PremiumRefund
+      description: Delete a PremiumRefund
+      operationId: deletePremiumRefund
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumRefundId
+        in: path
+        description: Unique identifier of the PremiumRefund
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: PremiumRefund deleted
+        "404":
+          description: PremiumRefund not found
+  /api/v1/premium-schedules/{premiumScheduleId}/instalments/{premiumInstalmentId}:
+    get:
+      tags:
+      - Premium Instalments
+      summary: Get PremiumInstalment by id
+      description: Retrieve one PremiumInstalment
+      operationId: getPremiumInstalmentById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumInstalmentId
+        in: path
+        description: Unique identifier of the PremiumInstalment
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: PremiumInstalment found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumInstalmentDTO"
+        "404":
+          description: PremiumInstalment not found
+    put:
+      tags:
+      - Premium Instalments
+      summary: Update PremiumInstalment
+      description: Update an existing PremiumInstalment
+      operationId: updatePremiumInstalment
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumInstalmentId
+        in: path
+        description: Unique identifier of the PremiumInstalment
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumInstalmentDTO"
+        required: true
+      responses:
+        "200":
+          description: PremiumInstalment updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumInstalmentDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: PremiumInstalment not found
+    delete:
+      tags:
+      - Premium Instalments
+      summary: Delete PremiumInstalment
+      description: Delete a PremiumInstalment
+      operationId: deletePremiumInstalment
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumInstalmentId
+        in: path
+        description: Unique identifier of the PremiumInstalment
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: PremiumInstalment deleted
+        "404":
+          description: PremiumInstalment not found
+  /api/v1/premium-schedules/{premiumScheduleId}/credit-control/{creditControlCaseId}:
+    get:
+      tags:
+      - Credit Control
+      summary: Get CreditControlCase by id
+      description: Retrieve one CreditControlCase
+      operationId: getCreditControlCaseById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: creditControlCaseId
+        in: path
+        description: Unique identifier of the CreditControlCase
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: CreditControlCase found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CreditControlCaseDTO"
+        "404":
+          description: CreditControlCase not found
+    put:
+      tags:
+      - Credit Control
+      summary: Update CreditControlCase
+      description: Update an existing CreditControlCase
+      operationId: updateCreditControlCase
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: creditControlCaseId
+        in: path
+        description: Unique identifier of the CreditControlCase
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditControlCaseDTO"
+        required: true
+      responses:
+        "200":
+          description: CreditControlCase updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CreditControlCaseDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: CreditControlCase not found
+    delete:
+      tags:
+      - Credit Control
+      summary: Delete CreditControlCase
+      description: Delete a CreditControlCase
+      operationId: deleteCreditControlCase
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: creditControlCaseId
+        in: path
+        description: Unique identifier of the CreditControlCase
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: CreditControlCase deleted
+        "404":
+          description: CreditControlCase not found
+  /api/v1/premium-schedules/{premiumScheduleId}/commissions/{commissionEntryId}:
+    get:
+      tags:
+      - Commission Entries
+      summary: Get CommissionEntry by id
+      description: Retrieve one CommissionEntry
+      operationId: getCommissionEntryById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: commissionEntryId
+        in: path
+        description: Unique identifier of the CommissionEntry
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: CommissionEntry found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CommissionEntryDTO"
+        "404":
+          description: CommissionEntry not found
+    put:
+      tags:
+      - Commission Entries
+      summary: Update CommissionEntry
+      description: Update an existing CommissionEntry
+      operationId: updateCommissionEntry
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: commissionEntryId
+        in: path
+        description: Unique identifier of the CommissionEntry
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommissionEntryDTO"
+        required: true
+      responses:
+        "200":
+          description: CommissionEntry updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CommissionEntryDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: CommissionEntry not found
+    delete:
+      tags:
+      - Commission Entries
+      summary: Delete CommissionEntry
+      description: Delete a CommissionEntry
+      operationId: deleteCommissionEntry
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: commissionEntryId
+        in: path
+        description: Unique identifier of the CommissionEntry
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: CommissionEntry deleted
+        "404":
+          description: CommissionEntry not found
+  /api/v1/premium-schedules/{premiumScheduleId}/audits/{premiumAuditId}:
+    get:
+      tags:
+      - Premium Audits
+      summary: Get PremiumAudit by id
+      description: Retrieve one PremiumAudit
+      operationId: getPremiumAuditById
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumAuditId
+        in: path
+        description: Unique identifier of the PremiumAudit
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: PremiumAudit found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumAuditDTO"
+        "404":
+          description: PremiumAudit not found
+    put:
+      tags:
+      - Premium Audits
+      summary: Update PremiumAudit
+      description: Update an existing PremiumAudit
+      operationId: updatePremiumAudit
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumAuditId
+        in: path
+        description: Unique identifier of the PremiumAudit
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumAuditDTO"
+        required: true
+      responses:
+        "200":
+          description: PremiumAudit updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumAuditDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: PremiumAudit not found
+    delete:
+      tags:
+      - Premium Audits
+      summary: Delete PremiumAudit
+      description: Delete a PremiumAudit
+      operationId: deletePremiumAudit
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: premiumAuditId
+        in: path
+        description: Unique identifier of the PremiumAudit
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: PremiumAudit deleted
+        "404":
+          description: PremiumAudit not found
+  /api/v1/indemnities/{indemnityDisbursementId}:
+    get:
+      tags:
+      - Indemnity Disbursements
+      summary: Get IndemnityDisbursement by id
+      description: Retrieve one IndemnityDisbursement
+      operationId: getIndemnityDisbursementById
+      parameters:
+      - name: indemnityDisbursementId
+        in: path
+        description: Unique identifier of the IndemnityDisbursement
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: IndemnityDisbursement found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        "404":
+          description: IndemnityDisbursement not found
+    put:
+      tags:
+      - Indemnity Disbursements
+      summary: Update IndemnityDisbursement
+      description: Update an existing IndemnityDisbursement
+      operationId: updateIndemnityDisbursement
+      parameters:
+      - name: indemnityDisbursementId
+        in: path
+        description: Unique identifier of the IndemnityDisbursement
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        required: true
+      responses:
+        "200":
+          description: IndemnityDisbursement updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: IndemnityDisbursement not found
+    delete:
+      tags:
+      - Indemnity Disbursements
+      summary: Delete IndemnityDisbursement
+      description: Delete a IndemnityDisbursement
+      operationId: deleteIndemnityDisbursement
+      parameters:
+      - name: indemnityDisbursementId
+        in: path
+        description: Unique identifier of the IndemnityDisbursement
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: IndemnityDisbursement deleted
+        "404":
+          description: IndemnityDisbursement not found
+  /api/v1/bordereaux/{bordereauId}:
+    get:
+      tags:
+      - Bordereaux
+      summary: Get Bordereau by id
+      description: Retrieve one Bordereau
+      operationId: getBordereauById
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Bordereau found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauDTO"
+        "404":
+          description: Bordereau not found
+    put:
+      tags:
+      - Bordereaux
+      summary: Update Bordereau
+      description: Update an existing Bordereau
+      operationId: updateBordereau
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BordereauDTO"
+        required: true
+      responses:
+        "200":
+          description: Bordereau updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: Bordereau not found
+    delete:
+      tags:
+      - Bordereaux
+      summary: Delete Bordereau
+      description: Delete a Bordereau
+      operationId: deleteBordereau
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Bordereau deleted
+        "404":
+          description: Bordereau not found
+  /api/v1/bordereaux/{bordereauId}/lines/{bordereauLineId}:
+    get:
+      tags:
+      - Bordereau Lines
+      summary: Get BordereauLine by id
+      description: Retrieve one BordereauLine
+      operationId: getBordereauLineById
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bordereauLineId
+        in: path
+        description: Unique identifier of the BordereauLine
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: BordereauLine found
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauLineDTO"
+        "404":
+          description: BordereauLine not found
+    put:
+      tags:
+      - Bordereau Lines
+      summary: Update BordereauLine
+      description: Update an existing BordereauLine
+      operationId: updateBordereauLine
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bordereauLineId
+        in: path
+        description: Unique identifier of the BordereauLine
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BordereauLineDTO"
+        required: true
+      responses:
+        "200":
+          description: BordereauLine updated
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauLineDTO"
+        "400":
+          description: Invalid data
+        "404":
+          description: BordereauLine not found
+    delete:
+      tags:
+      - Bordereau Lines
+      summary: Delete BordereauLine
+      description: Delete a BordereauLine
+      operationId: deleteBordereauLine
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bordereauLineId
+        in: path
+        description: Unique identifier of the BordereauLine
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: BordereauLine deleted
+        "404":
+          description: BordereauLine not found
+  /api/v1/premium-schedules:
+    post:
+      tags:
+      - Premium Schedules
+      summary: Create PremiumSchedule
+      description: Create a PremiumSchedule
+      operationId: createPremiumSchedule
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumScheduleDTO"
+        required: true
+      responses:
+        "201":
+          description: PremiumSchedule created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumScheduleDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/refunds:
+    post:
+      tags:
+      - Premium Refunds
+      summary: Create PremiumRefund
+      description: Create a PremiumRefund
+      operationId: createPremiumRefund
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumRefundDTO"
+        required: true
+      responses:
+        "201":
+          description: PremiumRefund created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumRefundDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/refunds/filter:
+    post:
+      tags:
+      - Premium Refunds
+      summary: Filter premiumRefunds
+      description: Retrieve a page of premiumRefunds matching the filter
+      operationId: filterPremiumRefunds
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestPremiumRefundDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponsePremiumRefundDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/premium-schedules/{premiumScheduleId}/instalments:
+    post:
+      tags:
+      - Premium Instalments
+      summary: Create PremiumInstalment
+      description: Create a PremiumInstalment
+      operationId: createPremiumInstalment
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumInstalmentDTO"
+        required: true
+      responses:
+        "201":
+          description: PremiumInstalment created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumInstalmentDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/instalments/filter:
+    post:
+      tags:
+      - Premium Instalments
+      summary: Filter premiumInstalments
+      description: Retrieve a page of premiumInstalments matching the filter
+      operationId: filterPremiumInstalments
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestPremiumInstalmentDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponsePremiumInstalmentDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/premium-schedules/{premiumScheduleId}/credit-control:
+    post:
+      tags:
+      - Credit Control
+      summary: Create CreditControlCase
+      description: Create a CreditControlCase
+      operationId: createCreditControlCase
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditControlCaseDTO"
+        required: true
+      responses:
+        "201":
+          description: CreditControlCase created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CreditControlCaseDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/credit-control/filter:
+    post:
+      tags:
+      - Credit Control
+      summary: Filter creditControlCases
+      description: Retrieve a page of creditControlCases matching the filter
+      operationId: filterCreditControlCases
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestCreditControlCaseDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseCreditControlCaseDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/premium-schedules/{premiumScheduleId}/commissions:
+    post:
+      tags:
+      - Commission Entries
+      summary: Create CommissionEntry
+      description: Create a CommissionEntry
+      operationId: createCommissionEntry
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommissionEntryDTO"
+        required: true
+      responses:
+        "201":
+          description: CommissionEntry created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CommissionEntryDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/commissions/filter:
+    post:
+      tags:
+      - Commission Entries
+      summary: Filter commissionEntries
+      description: Retrieve a page of commissionEntries matching the filter
+      operationId: filterCommissionEntries
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestCommissionEntryDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseCommissionEntryDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/premium-schedules/{premiumScheduleId}/audits:
+    post:
+      tags:
+      - Premium Audits
+      summary: Create PremiumAudit
+      description: Create a PremiumAudit
+      operationId: createPremiumAudit
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PremiumAuditDTO"
+        required: true
+      responses:
+        "201":
+          description: PremiumAudit created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PremiumAuditDTO"
+        "400":
+          description: Invalid data
+  /api/v1/premium-schedules/{premiumScheduleId}/audits/filter:
+    post:
+      tags:
+      - Premium Audits
+      summary: Filter premiumAudits
+      description: Retrieve a page of premiumAudits matching the filter
+      operationId: filterPremiumAudits
+      parameters:
+      - name: premiumScheduleId
+        in: path
+        description: Unique identifier of the PremiumSchedule
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestPremiumAuditDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponsePremiumAuditDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/premium-schedules/filter:
+    post:
+      tags:
+      - Premium Schedules
+      summary: Filter premiumSchedules
+      description: Retrieve a page of premiumSchedules matching the filter
+      operationId: filterPremiumSchedules
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestPremiumScheduleDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponsePremiumScheduleDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/indemnities:
+    post:
+      tags:
+      - Indemnity Disbursements
+      summary: Create IndemnityDisbursement
+      description: Create a IndemnityDisbursement
+      operationId: createIndemnityDisbursement
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        required: true
+      responses:
+        "201":
+          description: IndemnityDisbursement created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        "400":
+          description: Invalid data
+  /api/v1/indemnities/filter:
+    post:
+      tags:
+      - Indemnity Disbursements
+      summary: Filter indemnityDisbursements
+      description: Retrieve a page of indemnityDisbursements matching the filter
+      operationId: filterIndemnityDisbursements
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestIndemnityDisbursementDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseIndemnityDisbursementDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/bordereaux:
+    post:
+      tags:
+      - Bordereaux
+      summary: Create Bordereau
+      description: Create a Bordereau
+      operationId: createBordereau
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BordereauDTO"
+        required: true
+      responses:
+        "201":
+          description: Bordereau created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauDTO"
+        "400":
+          description: Invalid data
+  /api/v1/bordereaux/{bordereauId}/lines:
+    post:
+      tags:
+      - Bordereau Lines
+      summary: Create BordereauLine
+      description: Create a BordereauLine
+      operationId: createBordereauLine
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BordereauLineDTO"
+        required: true
+      responses:
+        "201":
+          description: BordereauLine created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BordereauLineDTO"
+        "400":
+          description: Invalid data
+  /api/v1/bordereaux/{bordereauId}/lines/filter:
+    post:
+      tags:
+      - Bordereau Lines
+      summary: Filter bordereauLines
+      description: Retrieve a page of bordereauLines matching the filter
+      operationId: filterBordereauLines
+      parameters:
+      - name: bordereauId
+        in: path
+        description: Unique identifier of the Bordereau
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestBordereauLineDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseBordereauLineDTO"
+        "400":
+          description: Invalid filter request
+  /api/v1/bordereaux/filter:
+    post:
+      tags:
+      - Bordereaux
+      summary: Filter bordereaux
+      description: Retrieve a page of bordereaux matching the filter
+      operationId: filterBordereaux
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Unique key for idempotent requests. If provided, ensures that\
+          \ identical requests with the same key will only be processed once."
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilterRequestBordereauDTO"
+        required: true
+      responses:
+        "200":
+          description: Page of matching records
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaginationResponseBordereauDTO"
+        "400":
+          description: Invalid filter request
+components:
+  schemas:
+    PremiumScheduleDTO:
+      required:
+      - policyId
+      - scheduleStatus
+      - tenantId
+      type: object
+      properties:
+        premiumScheduleId:
+          type: string
+          format: uuid
+          readOnly: true
+        tenantId:
+          type: string
+          format: uuid
+        policyId:
+          type: string
+          format: uuid
+        contractId:
+          type: string
+          format: uuid
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        scheduleStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - COMPLETED
+          - CANCELLED
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PremiumRefundDTO:
+      required:
+      - amount
+      - policyId
+      - premiumScheduleId
+      - refundStatus
+      type: object
+      properties:
+        premiumRefundId:
+          type: string
+          format: uuid
+          readOnly: true
+        premiumScheduleId:
+          type: string
+          format: uuid
+        policyId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        reason:
+          maxLength: 4000
+          minLength: 0
+          type: string
+        refundStatus:
+          type: string
+          enum:
+          - REQUESTED
+          - APPROVED
+          - PAID
+          - REJECTED
+        paymentOrderId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PremiumInstalmentDTO:
+      required:
+      - amount
+      - dueDate
+      - instalmentStatus
+      - premiumScheduleId
+      - sequenceNumber
+      type: object
+      properties:
+        premiumInstalmentId:
+          type: string
+          format: uuid
+          readOnly: true
+        premiumScheduleId:
+          type: string
+          format: uuid
+        sequenceNumber:
+          type: integer
+          format: int32
+        dueDate:
+          type: string
+          format: date
+        amount:
+          type: number
+        instalmentStatus:
+          type: string
+          enum:
+          - SCHEDULED
+          - DUE
+          - COLLECTED
+          - OVERDUE
+          - WAIVED
+          - REFUNDED
+        paymentOrderId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreditControlCaseDTO:
+      required:
+      - arrearsAmount
+      - caseStatus
+      - openedAt
+      - premiumScheduleId
+      type: object
+      properties:
+        creditControlCaseId:
+          type: string
+          format: uuid
+          readOnly: true
+        premiumScheduleId:
+          type: string
+          format: uuid
+        caseStatus:
+          type: string
+          enum:
+          - OPEN
+          - REMINDED
+          - LAPSE_NOTICE
+          - LAPSED
+          - CURED
+        arrearsAmount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        openedAt:
+          type: string
+          format: date-time
+        lapseNoticeAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CommissionEntryDTO:
+      required:
+      - amount
+      - commissionStatus
+      - commissionType
+      - partyId
+      - premiumScheduleId
+      type: object
+      properties:
+        commissionEntryId:
+          type: string
+          format: uuid
+          readOnly: true
+        premiumScheduleId:
+          type: string
+          format: uuid
+        partyId:
+          type: string
+          format: uuid
+        distributorId:
+          type: string
+          format: uuid
+        commissionType:
+          type: string
+          enum:
+          - ACQUISITION
+          - RENEWAL
+          - OVERRIDE
+        amount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        commissionStatus:
+          type: string
+          enum:
+          - ACCRUED
+          - PAYABLE
+          - PAID
+          - CLAWED_BACK
+        paymentOrderId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PremiumAuditDTO:
+      required:
+      - adjustmentAmount
+      - auditStatus
+      - policyId
+      - premiumScheduleId
+      type: object
+      properties:
+        premiumAuditId:
+          type: string
+          format: uuid
+          readOnly: true
+        premiumScheduleId:
+          type: string
+          format: uuid
+        policyId:
+          type: string
+          format: uuid
+        declaredExposure:
+          type: number
+        auditedExposure:
+          type: number
+        adjustmentAmount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        auditStatus:
+          type: string
+          enum:
+          - DRAFT
+          - PROPOSED
+          - APPROVED
+          - REJECTED
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    IndemnityDisbursementDTO:
+      required:
+      - amount
+      - claimId
+      - claimSettlementId
+      - disbursementStatus
+      - payeePartyId
+      - tenantId
+      type: object
+      properties:
+        indemnityDisbursementId:
+          type: string
+          format: uuid
+          readOnly: true
+        tenantId:
+          type: string
+          format: uuid
+        claimId:
+          type: string
+          format: uuid
+        claimSettlementId:
+          type: string
+          format: uuid
+        payeePartyId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        disbursementStatus:
+          type: string
+          enum:
+          - RECORDED
+          - SUBMITTED
+          - SETTLED
+          - FAILED
+        paymentOrderId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    BordereauDTO:
+      required:
+      - bordereauStatus
+      - distributorId
+      - periodEnd
+      - periodStart
+      - tenantId
+      type: object
+      properties:
+        bordereauId:
+          type: string
+          format: uuid
+          readOnly: true
+        tenantId:
+          type: string
+          format: uuid
+        distributorId:
+          type: string
+          format: uuid
+        periodStart:
+          type: string
+          format: date
+        periodEnd:
+          type: string
+          format: date
+        bordereauStatus:
+          type: string
+          enum:
+          - DRAFT
+          - SUBMITTED
+          - ACCEPTED
+          - REJECTED
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    BordereauLineDTO:
+      required:
+      - amount
+      - bordereauId
+      - lineType
+      type: object
+      properties:
+        bordereauLineId:
+          type: string
+          format: uuid
+          readOnly: true
+        bordereauId:
+          type: string
+          format: uuid
+        lineType:
+          type: string
+          enum:
+          - PREMIUM
+          - COMMISSION
+          - CLAIM
+          - REFUND
+        policyId:
+          type: string
+          format: uuid
+        claimId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+        reference:
+          maxLength: 128
+          minLength: 0
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    FilterOptions:
+      type: object
+      properties:
+        caseInsensitiveStrings:
+          type: boolean
+        includeInheritedFields:
+          type: boolean
+      description: Filter options for customizing filter behavior
+    FilterRequestPremiumRefundDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/PremiumRefundDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          description: The zero-based page number to retrieve.
+          format: int32
+          example: 0
+          default: 0
+        pageSize:
+          type: integer
+          description: The number of items per page.
+          format: int32
+          example: 10
+          default: 10
+        sortBy:
+          type: string
+          description: The field to sort the results by.
+          example: name
+        sortDirection:
+          type: string
+          description: "The direction of sorting, either ASC or DESC."
+          example: DESC
+          default: DESC
+      description: "Represents a pagination request for retrieving paginated results,\
+        \ including page number, size, sort field, and direction."
+    RangeFilter:
+      type: object
+      properties:
+        ranges:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/RangeObject"
+          description: Map of field names to their range criteria
+      description: Represents range filters for numeric fields
+    RangeObject:
+      type: object
+      properties:
+        from:
+          type: object
+          description: Start value of the range
+        to:
+          type: object
+          description: End value of the range
+      description: Represents a range with from and to values
+    PaginationResponsePremiumRefundDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/PremiumRefundDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestPremiumInstalmentDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/PremiumInstalmentDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponsePremiumInstalmentDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/PremiumInstalmentDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestCreditControlCaseDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/CreditControlCaseDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseCreditControlCaseDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/CreditControlCaseDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestCommissionEntryDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/CommissionEntryDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseCommissionEntryDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/CommissionEntryDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestPremiumAuditDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/PremiumAuditDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponsePremiumAuditDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/PremiumAuditDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestPremiumScheduleDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/PremiumScheduleDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponsePremiumScheduleDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/PremiumScheduleDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestIndemnityDisbursementDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseIndemnityDisbursementDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/IndemnityDisbursementDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestBordereauLineDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/BordereauLineDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseBordereauLineDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/BordereauLineDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
+    FilterRequestBordereauDTO:
+      required:
+      - pagination
+      type: object
+      properties:
+        filters:
+          $ref: "#/components/schemas/BordereauDTO"
+        rangeFilters:
+          $ref: "#/components/schemas/RangeFilter"
+        pagination:
+          $ref: "#/components/schemas/PaginationRequest"
+        options:
+          $ref: "#/components/schemas/FilterOptions"
+      description: Filter criteria
+    PaginationResponseBordereauDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            $ref: "#/components/schemas/BordereauDTO"
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: "The current page number, typically zero-based."
+          format: int32
+      description: Represents a paginated response containing a list of items and
+        pagination metadata.
