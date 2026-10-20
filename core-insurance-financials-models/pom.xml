@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-insurance-financials-models</artifactId>
+    <name>core-insurance-financials-models</name>
 
     <dependencies>
         <dependency>

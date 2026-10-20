@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-insurance-financials-interfaces</artifactId>
+    <name>core-insurance-financials-interfaces</name>
 
     <dependencies>
         <dependency>

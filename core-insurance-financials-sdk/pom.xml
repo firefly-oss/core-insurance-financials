@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-insurance-financials-sdk</artifactId>
+    <name>core-insurance-financials-sdk</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
